@@ -36,12 +36,12 @@ public class Main {
         Map<String, Integer> v = new HashMap<String, Integer>();
         List<Edge> e = new LinkedList();
 
-            v.put("a", 0);
-            v.put("b", -1);
-            v.put("c", -1);
-            v.put("d", -1);
-            v.put("e", -1);
-            v.put("f", -1);
+        v.put("a", 0);
+        v.put("b", -1);
+        v.put("c", -1);
+        v.put("d", -1);
+        v.put("e", -1);
+        v.put("f", -1);
 
 //        v.add(new Vertex(0, "a"));
 //        v.add(new Vertex(-1, "b"));
@@ -61,37 +61,40 @@ public class Main {
         e.add(new Edge("e", "f", 9));
 
 
-
-        dijkstra(v,e);
+        dijkstra(v, e, "e");
 
 
     }
-    static void dijkstra(Map<String, Integer> v, List<Edge> e) {
+
+    static void dijkstra(Map<String, Integer> v, List<Edge> e, String endVertex) {
 
         Iterator<Map.Entry<String, Integer>> it = v.entrySet().iterator();
 
         while (it.hasNext()) {
+
             Map.Entry<String, Integer> entry = it.next();
 
-            if (entry.getKey() != "e") {
+
+            if (entry.getKey() != endVertex ) {
                 for (Edge o : e) {
                     if (o.getStart().equals(entry.getKey())) {
                         if (v.get(o.getEnd()) < 0) {
                             v.put(o.getEnd(), entry.getValue() + o.getValue());
-                        } else if (/*iValue+o.value<=oEnd.value*/ (v.get(entry.getKey()) + o.getValue()) < v.get(o.getEnd())) {
+                        } else if (/*iValue+o.value<=oEnd.value*/ (entry.getValue() + o.getValue()) < v.get(o.getEnd())) {
                             // replace oEndValue in vMap
                             v.put(o.getEnd(), entry.getValue() + o.getValue());
-                            System.out.println(entry.getKey() + "(" + v.get(entry.getKey()) + ")-" + o.getEnd() + "(" + v.get(o.getEnd()) + ")");
-                        } else {
-                            System.out.println("how'd i get here");
+//                        } else {
+//                            System.out.println("how'd i get here");
+//                            System.out.println(entry.getKey()+o.getStart()+o.getEnd() +"/n" + entry.getValue() + " "+ o.getValue());
                         }
                     }
 
                 }
-                it.remove();
             } else {
-                System.out.println("Solution: it takes " + v.get("e") + " steps to take the shortest path from a to e.");
+                System.out.println("Solution: it takes " + v.get(endVertex) + " steps to take the shortest path from a to " + endVertex);
+
             }
+
         }
     }
 }
@@ -127,17 +130,13 @@ public class Main {
 //}
 
 class Edge {
-    public Edge(String start, String end, int value) {
-        this.end = end;
-        this.start = start;
-        this.value = value;
-    }
-
     String end;
     String start;
     int value;
 
-    public void setValue(int value) {
+    public Edge(String start, String end, int value) {
+        this.end = end;
+        this.start = start;
         this.value = value;
     }
 
@@ -151,5 +150,9 @@ class Edge {
 
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }
