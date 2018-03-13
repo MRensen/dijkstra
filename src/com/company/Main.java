@@ -60,17 +60,25 @@ public class Main {
         e.add(new Edge("d", "e", 6));
         e.add(new Edge("e", "f", 9));
 
-        Iterator<Map.Entry<String,Integer>> it = v.entrySet().iterator();
 
-        while(it.hasNext()){
+
+        dijkstra(v,e);
+
+
+    }
+    static void dijkstra(Map<String, Integer> v, List<Edge> e) {
+
+        Iterator<Map.Entry<String, Integer>> it = v.entrySet().iterator();
+
+        while (it.hasNext()) {
             Map.Entry<String, Integer> entry = it.next();
 
-            if(entry.getKey() != "e") {
+            if (entry.getKey() != "e") {
                 for (Edge o : e) {
                     if (o.getStart().equals(entry.getKey())) {
-                        if(v.get(o.getEnd())<0){
+                        if (v.get(o.getEnd()) < 0) {
                             v.put(o.getEnd(), entry.getValue() + o.getValue());
-                        }else if (/*iValue+o.value<=oEnd.value*/ (v.get(entry.getKey()) + o.getValue()) < v.get(o.getEnd())) {
+                        } else if (/*iValue+o.value<=oEnd.value*/ (v.get(entry.getKey()) + o.getValue()) < v.get(o.getEnd())) {
                             // replace oEndValue in vMap
                             v.put(o.getEnd(), entry.getValue() + o.getValue());
                             System.out.println(entry.getKey() + "(" + v.get(entry.getKey()) + ")-" + o.getEnd() + "(" + v.get(o.getEnd()) + ")");
@@ -85,8 +93,6 @@ public class Main {
                 System.out.println("Solution: it takes " + v.get("e") + " steps to take the shortest path from a to e.");
             }
         }
-
-
     }
 }
 //class Vertex {
